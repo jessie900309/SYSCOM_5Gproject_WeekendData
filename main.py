@@ -3,13 +3,13 @@ from linkSQL import sqlConnect
 from util import openExcelFile, catchError
 from constants import SQL_select_N_AS, SQL_select_S_AS, SQL_select_N_SL, SQL_select_S_SL, SQL_select_N_PO, SQL_select_S_PO, time_list
 
-input_data = "example_165K.xlsx"
+input_data = "165K_lane1.xlsx"
 picked_lane = '0'
 picked_cctv = '165'
 
 SQL_set_list = [
     "SET @laneid = '{}';".format(picked_lane),
-    "SET @ncctv = '{}-1';".format(picked_cctv), "SET @scctv = '{}-2';".format(picked_cctv),
+    "SET @ncctv = '{}K-1';".format(picked_cctv), "SET @scctv = '{}K-2';".format(picked_cctv),
     "SET @TS = '2022-09-11 10:00:00';",
     "SET @TE = '2022-09-11 15:00:00';"
 ]
@@ -40,6 +40,7 @@ def writeAS(ws, col, table):
         row_speed = table.iloc[df_row][1]
         ROW = getRowIndex(row_time)
         ws[col + ROW].value = row_speed
+        print(row_time)
 
 
 def writeSL(ws, col_len, col_vol, table):
@@ -50,16 +51,17 @@ def writeSL(ws, col_len, col_vol, table):
         ROW = getRowIndex(row_time)
         ws[col_len + ROW].value = row_length
         ws[col_vol + ROW].value = row_volume
+        print(row_time)
 
 
 def writePO(ws, col, table):
     po = []
     for df_row in table.index:
         po.append((table.iloc[df_row][0]).replace(microsecond=0))
-    for imgTime in po:
-        time_index = time_list.index(imgTime)
-        ROW = str(time_index + 5)
+    for row_time in po:
+        ROW = getRowIndex(row_time)
         ws[col + ROW].value += 1
+        print(row_time)
 
 
 def save_safe(wb):
@@ -84,16 +86,19 @@ def main():
         # conn close
         conn.close()
         # write time
-        writeTime(ws)
+        # writeTime(ws)
+        print("write AS")
         writeAS(ws, 'B', table_N_AS)
         writeAS(ws, 'C', table_S_AS)
-        ws,wb = save_safe(wb)
+        ws, wb = save_safe(wb)
+        print("write SL")
         writeSL(ws, 'E', 'G', table_N_SL)
         writeSL(ws, 'F', 'H', table_S_SL)
-        ws,wb = save_safe(wb)
+        ws, wb = save_safe(wb)
+        print("write PO")
         writePO(ws, 'I', table_N_PO)
         writePO(ws, 'J', table_S_PO)
-        ws,wb = save_safe(wb)
+        ws, wb = save_safe(wb)
         for hidden_row in range(5*60):
             ws.row_dimensions.group(60*hidden_row+6, 60*hidden_row+64, hidden=True)
         wb.save("output.xlsx")

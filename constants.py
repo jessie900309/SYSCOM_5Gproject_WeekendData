@@ -8,10 +8,17 @@ for sec in range(total_seconds):
     next_time = time_start + datetime.timedelta(seconds=sec)
     time_list.append(next_time)
 
-SQL_select_N_AS = "SELECT DataCollectTime,Speed FROM AverageSpeed WHERE DeviceID = @ncctv AND LaneID = @laneid AND DataCollectTime BETWEEN @TS AND @TE ORDER BY DataCollectTime;"
-SQL_select_S_AS = "SELECT DataCollectTime,Speed FROM AverageSpeed WHERE DeviceID = @scctv AND LaneID = @laneid AND DataCollectTime BETWEEN @TS AND @TE ORDER BY DataCollectTime;"
-SQL_select_N_SL = "SELECT ImageCaptureTime,`Length`, Volume FROM StopLen WHERE cctvid = @ncctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
-SQL_select_S_SL = "SELECT ImageCaptureTime,`Length`, Volume FROM StopLen WHERE cctvid = @scctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
-SQL_select_N_PO = "SELECT ImageCaptureTime FROM VehicleRecResultPO WHERE cctvid = @ncctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
-SQL_select_S_PO = "SELECT ImageCaptureTime FROM VehicleRecResultPO WHERE cctvid = @scctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
+# todo
+# SQL_select_N_AS = "SELECT DataCollectTime,Speed FROM AverageSpeed WHERE DeviceID = @ncctv AND LaneID = @laneid AND DataCollectTime BETWEEN @TS AND @TE ORDER BY DataCollectTime;"
+# SQL_select_S_AS = "SELECT DataCollectTime,Speed FROM AverageSpeed WHERE DeviceID = @scctv AND LaneID = @laneid AND DataCollectTime BETWEEN @TS AND @TE ORDER BY DataCollectTime;"
+# SQL_select_N_SL = "SELECT ImageCaptureTime,`Length`, Volume FROM StopLen WHERE cctvid = @ncctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
+# SQL_select_S_SL = "SELECT ImageCaptureTime,`Length`, Volume FROM StopLen WHERE cctvid = @scctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
+# SQL_select_N_PO = "SELECT ImageCaptureTime FROM VehicleRecResultPO WHERE cctvid = @ncctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
+# SQL_select_S_PO = "SELECT ImageCaptureTime FROM VehicleRecResultPO WHERE cctvid = @scctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
 
+SQL_select_N_AS = "SELECT DataCollectTime,Speed FROM AverageSpeed WHERE DeviceID = @ncctv AND LaneID = '0' AND DataCollectTime BETWEEN @TS AND @TE ORDER BY DataCollectTime;"
+SQL_select_S_AS = "SELECT DataCollectTime,Speed FROM AverageSpeed WHERE DeviceID = @scctv AND LaneID = @laneid AND DataCollectTime BETWEEN @TS AND @TE ORDER BY DataCollectTime;"
+SQL_select_N_SL = "SELECT ImageCaptureTime,`Length`, Volume FROM StopLen WHERE cctvid = @ncctv AND LaneID = '0' AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
+SQL_select_S_SL = "SELECT ImageCaptureTime,`Length`, Volume FROM StopLen WHERE cctvid = @scctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
+SQL_select_N_PO = "SELECT ImageCaptureTime FROM VehicleRecResultPO WHERE cctvid = @ncctv AND LaneID = '0' AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
+SQL_select_S_PO = "SELECT ImageCaptureTime FROM VehicleRecResultPO WHERE cctvid = @scctv AND LaneID = @laneid AND ImageCaptureTime BETWEEN @TS AND @TE ORDER BY ImageCaptureTime;"
