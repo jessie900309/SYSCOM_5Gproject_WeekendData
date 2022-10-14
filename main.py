@@ -9,7 +9,7 @@ picked_cctv = '165'
 
 SQL_set_list = [
     "SET @laneid = '{}';".format(picked_lane),
-    "SET @ncctv = '{}-1';", "SET @scctv = '{}-2';",
+    "SET @ncctv = '{}-1';".format(picked_cctv), "SET @scctv = '{}-2';".format(picked_cctv),
     "SET @TS = '2022-09-11 10:00:00';",
     "SET @TE = '2022-09-11 15:00:00';"
 ]
