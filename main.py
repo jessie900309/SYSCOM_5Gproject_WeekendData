@@ -1,18 +1,16 @@
 import pandas as pd
 from linkSQL import sqlConnect
 from util import openExcelFile, catchError
-from constants import SQL_select_N_AS, SQL_select_S_AS, SQL_select_N_SL, SQL_select_S_SL, SQL_select_N_PO, SQL_select_S_PO, time_list
+from constants import *
 
 input_file = "input_file.xlsx"
-output_file = "168K_lane1.xlsx"
-picked_lane = '1'
-picked_cctv = '168'
+output_file = "{}K_lane{}.xlsx".format(picked_cctv, picked_lane)
 
 SQL_set_list = [
     "SET @laneid = '{}';".format(picked_lane),
     "SET @ncctv = '{}K-1';".format(picked_cctv), "SET @scctv = '{}K-2';".format(picked_cctv),
-    "SET @TS = '2022-09-11 10:00:00';",
-    "SET @TE = '2022-09-11 15:00:00';"
+    "SET @TS = '{} 10:00:00';".format(picked_date),
+    "SET @TE = '{} 15:00:00';".format(picked_date)
 ]
 
 def getData(cur, sql):
@@ -101,7 +99,7 @@ def main():
         ws, wb = save_safe(wb)
         for hidden_row in range(5*60):
             ws.row_dimensions.group(60*hidden_row+6, 60*hidden_row+64, hidden=True)
-        wb.save("output_file.xlsx")
+        wb.save(output_file)
         print("\n導入完成OuO")
     except KeyboardInterrupt:
         print("Bye Bye :)")

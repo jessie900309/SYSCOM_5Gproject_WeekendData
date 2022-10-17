@@ -1,7 +1,11 @@
 import datetime
 
+picked_lane = '1'
+picked_cctv = '166'
+picked_date = '2022-09-11'
+
 # 時間列表 10:00:00 ~ 15:00:00
-time_start = datetime.datetime.strptime("2022-09-11 10:00:00", "%Y-%m-%d %H:%M:%S")
+time_start = datetime.datetime.strptime("{} 10:00:00".format(picked_date), "%Y-%m-%d %H:%M:%S")
 time_list = []
 total_seconds = 3600*5 + 1
 for sec in range(total_seconds):
