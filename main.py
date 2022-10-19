@@ -28,7 +28,6 @@ def get_row_index(time):
 
 
 def writeTime(ws):
-    # time_list_length = len(time_list)
     for time in time_list:
         ROW = get_row_index(time)
         cell = ws['A' + ROW]
@@ -75,12 +74,15 @@ def writePO(ws, col, table):
         formatCellValue(cell, 'General')
 
 
-def write_function(ws, row):
-    cell_id = 'D' + row
-    ws[cell_id] = '=IF(AND(B{}<=$C$1,B{}<>"", C{}<=$C$1,C{}<>""), "v", "x")'.format(row, row, row, row)
-    # todo
-    cell_id = 'K' + row
-    '=IF(AND(D185=D125, D185<>"x"), "v", "")'.format()
+def write_function(ws):
+    for row in range(5, total_seconds, 60):
+        cell_id = 'D' + str(row)
+        ws[cell_id] = '=IF(AND(B{}<=$C$1,B{}<>"", C{}<=$C$1,C{}<>""), "v", "x")'.format(row, row, row, row)
+        formatCellValue(ws[cell_id], 'General')
+        if row > 60:
+            cell_id = 'K' + str(row)
+            ws[cell_id] = '=IF(AND(D{}=D{}, D{}<>"x"), "v", "")'.format(row, row-60, row)
+            formatCellValue(ws[cell_id], 'General')
 
 
 def save_safe(wb):
@@ -121,6 +123,7 @@ def main():
         writePO(ws, 'I', table_N_PO)
         writePO(ws, 'J', table_S_PO)
         ws, wb = save_safe(wb)
+        write_function(ws)
         for hidden_row in range(total_hours * 60):
             ws.row_dimensions.group(60 * hidden_row + 6, 60 * hidden_row + 64, hidden=True)
         wb.save(output_file)

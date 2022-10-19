@@ -1,7 +1,7 @@
 import sys
 import traceback
 import openpyxl
-from openpyxl.styles import Font
+from openpyxl.styles import Font, Alignment
 
 
 def catchError(e):
@@ -24,7 +24,8 @@ def openExcelFile(op):
 
 
 def formatCellValue(cell, format):
-    # cell.alignment = Alignment(horizontal='center', vertical='center')
     cell.font = Font(name=u'微軟正黑體', color='FF000000', size=11)
     cell.number_format = format
+    if cell.column == 4 or cell.column == 11:
+        cell.alignment = Alignment(horizontal='center', vertical='center')
 
