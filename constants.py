@@ -3,8 +3,8 @@ import datetime
 picked_lane = '0'
 picked_cctv = '166'
 picked_date = '2022-09-11'
-start_time = '08:00:00'
-end_time = '12:00:00'
+start_time = '10:00:00'
+end_time = '15:00:00'
 
 # 時間列表
 time_start = datetime.datetime.strptime("{} {}".format(picked_date, start_time), "%Y-%m-%d %H:%M:%S")
