@@ -8,9 +8,10 @@ output_file = "{}K_lane{}.xlsx".format(picked_cctv, picked_lane)
 
 SQL_set_list = [
     "SET @laneid = '{}';".format(picked_lane),
-    "SET @ncctv = '{}K-1';".format(picked_cctv), "SET @scctv = '{}K-2';".format(picked_cctv),
+    "SET @ncctv = '{}K-1';".format(picked_cctv),
+    "SET @scctv = '{}K-2';".format(picked_cctv),
     "SET @TS = '{} {}';".format(picked_date, start_time),
-    "SET @TE = '{} {}';".format(picked_date, end_time)
+    "SET @TE = '{} {}';".format(picked_date, end_time),
 ]
 
 
@@ -30,9 +31,9 @@ def get_row_index(time):
 def writeTime(ws):
     for time in time_list:
         ROW = get_row_index(time)
-        cell = ws['A' + ROW]
+        cell = ws["A" + ROW]
         cell.value = time
-        formatCellValue(cell, 'hh:mm:ss')
+        formatCellValue(cell, "hh:mm:ss")
 
 
 def writeAS(ws, col, table):
@@ -42,7 +43,7 @@ def writeAS(ws, col, table):
         ROW = get_row_index(row_time)
         cell = ws[col + ROW]
         cell.value = row_speed
-        formatCellValue(cell, 'General')
+        formatCellValue(cell, "General")
 
 
 def writeSL(ws, col_len, col_vol, table):
@@ -53,10 +54,10 @@ def writeSL(ws, col_len, col_vol, table):
         ROW = get_row_index(row_time)
         cell_len = ws[col_len + ROW]
         cell_len.value = row_length
-        formatCellValue(cell_len, 'General')
+        formatCellValue(cell_len, "General")
         cell_vol = ws[col_vol + ROW]
         cell_vol.value = row_volume
-        formatCellValue(cell_vol, 'General')
+        formatCellValue(cell_vol, "General")
 
 
 def writePO(ws, col, table):
@@ -71,18 +72,22 @@ def writePO(ws, col, table):
         except:
             cell.value = 0
             cell.value += 1
-        formatCellValue(cell, 'General')
+        formatCellValue(cell, "General")
 
 
 def write_function(ws):
     for row in range(5, total_seconds, 60):
-        cell_id = 'D' + str(row)
-        ws[cell_id] = '=IF(AND(B{}<=$C$1,B{}<>"", C{}<=$C$1,C{}<>""), "v", "x")'.format(row, row, row, row)
-        formatCellValue(ws[cell_id], 'General')
+        cell_id = "D" + str(row)
+        ws[cell_id] = '=IF(AND(B{}<=$C$1,B{}<>"", C{}<=$C$1,C{}<>""), "v", "x")'.format(
+            row, row, row, row
+        )
+        formatCellValue(ws[cell_id], "General")
         if row > 60:
-            cell_id = 'K' + str(row)
-            ws[cell_id] = '=IF(AND(D{}=D{}, D{}<>"x"), "v", "")'.format(row, row-60, row)
-            formatCellValue(ws[cell_id], 'General')
+            cell_id = "K" + str(row)
+            ws[cell_id] = '=IF(AND(D{}=D{}, D{}<>"x"), "v", "")'.format(
+                row, row - 60, row
+            )
+            formatCellValue(ws[cell_id], "General")
 
 
 def save_safe(wb):
@@ -112,20 +117,22 @@ def main():
         print("write time . . .")
         writeTime(ws)
         print("write AS . . .")
-        writeAS(ws, 'B', table_N_AS)
-        writeAS(ws, 'C', table_S_AS)
+        writeAS(ws, "B", table_N_AS)
+        writeAS(ws, "C", table_S_AS)
         ws, wb = save_safe(wb)
         print("write SL . . .")
-        writeSL(ws, 'E', 'G', table_N_SL)
-        writeSL(ws, 'F', 'H', table_S_SL)
+        writeSL(ws, "E", "G", table_N_SL)
+        writeSL(ws, "F", "H", table_S_SL)
         ws, wb = save_safe(wb)
         print("write PO . . .")
-        writePO(ws, 'I', table_N_PO)
-        writePO(ws, 'J', table_S_PO)
+        writePO(ws, "I", table_N_PO)
+        writePO(ws, "J", table_S_PO)
         ws, wb = save_safe(wb)
         write_function(ws)
         for hidden_row in range(total_hours * 60):
-            ws.row_dimensions.group(60 * hidden_row + 6, 60 * hidden_row + 64, hidden=True)
+            ws.row_dimensions.group(
+                60 * hidden_row + 6, 60 * hidden_row + 64, hidden=True
+            )
         wb.save(output_file)
         print("\n導入完成OuO")
     except KeyboardInterrupt:
@@ -135,5 +142,5 @@ def main():
         catchError(e)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

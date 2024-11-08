@@ -1,16 +1,22 @@
 import datetime
 
-picked_lane = '0'
-picked_cctv = '166'
-picked_date = '2022-09-11'
-start_time = '10:00:00'
-end_time = '15:00:00'
+picked_lane = "0"
+picked_cctv = "166"
+picked_date = "2022-09-11"
+start_time = "10:00:00"
+end_time = "15:00:00"
 
 # 時間列表
-time_start = datetime.datetime.strptime("{} {}".format(picked_date, start_time), "%Y-%m-%d %H:%M:%S")
+time_start = datetime.datetime.strptime(
+    "{} {}".format(picked_date, start_time), "%Y-%m-%d %H:%M:%S"
+)
 time_list = []
-total_seconds = (datetime.datetime.strptime(end_time, "%H:%M:%S") - datetime.datetime.strptime(start_time, "%H:%M:%S") + datetime.timedelta(seconds=1)).seconds
-total_hours = int(total_seconds/3600)
+total_seconds = (
+    datetime.datetime.strptime(end_time, "%H:%M:%S")
+    - datetime.datetime.strptime(start_time, "%H:%M:%S")
+    + datetime.timedelta(seconds=1)
+).seconds
+total_hours = int(total_seconds / 3600)
 
 for sec in range(total_seconds):
     next_time = time_start + datetime.timedelta(seconds=sec)

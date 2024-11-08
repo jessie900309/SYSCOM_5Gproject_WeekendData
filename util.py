@@ -11,7 +11,7 @@ def catchError(e):
     lastCallStack = traceback.extract_tb(tb)
     fileName = lastCallStack[0]
     # lineNum = lastCallStack[1]
-    errMsg = "File \"{}\", \n [{}] {}\n".format(fileName, error_class, detail)
+    errMsg = 'File "{}", \n [{}] {}\n'.format(fileName, error_class, detail)
     print(errMsg)
     sys.exit(1)
 
@@ -24,8 +24,7 @@ def openExcelFile(op):
 
 
 def formatCellValue(cell, format):
-    cell.font = Font(name=u'微軟正黑體', color='FF000000', size=11)
+    cell.font = Font(name="微軟正黑體", color="FF000000", size=11)
     cell.number_format = format
     if cell.column == 4 or cell.column == 11:
-        cell.alignment = Alignment(horizontal='center', vertical='center')
-
+        cell.alignment = Alignment(horizontal="center", vertical="center")
